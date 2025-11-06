@@ -3,6 +3,7 @@ using UnityEngine;
 public class mäniska : MonoBehaviour
 
 {
+    mäniskaspawn humanspawn;
     public float speed = 1f;
     private Vector2 direction;
     private float changeDirectionTime = 0f;
@@ -27,7 +28,8 @@ public class mäniska : MonoBehaviour
         transform.Translate(direction * speed * Time.deltaTime);
         //använd detta för hålla snubbe inom scenen 
         Vector3 pos = transform.position;
-        if (pos.x > 10 || pos.x < -10) direction.x = -direction.x;
-        if (pos.y > 5 || pos.y < -5) direction.y = -direction.y;
+        if (pos.x > 8 || pos.x < -8) direction.x = -direction.x;
+        if (pos.y > 4 || pos.y < -4) direction.y = -direction.y;
     }
+
 }
