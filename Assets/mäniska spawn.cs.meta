@@ -1,2 +1,13 @@
 fileFormatVersion: 2
 guid: 23bc66ce52e266d4c8ba0ac3c8fbe262
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - Square: {fileID: 4501260626738517090, guid: 545109abd7f7d7d43a7ffed87fd5b282, type: 3}
+  - sick: {fileID: 1723498467413108795, guid: cfab7865dedcf5d459fe48278a72e172, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

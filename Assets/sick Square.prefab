@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1672089462136474084}
   - component: {fileID: 4180666560490068927}
   m_Layer: 0
-  m_Name: 'sick Square '
+  m_Name: sick Square
   m_TagString: "m\xE4niska"
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
