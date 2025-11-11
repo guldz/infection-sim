@@ -3,9 +3,9 @@ using UnityEngine;
 public class Maniska : MonoBehaviour
 {
     public float speed = 1f;
-    private Vector2 direction;
+    private Vector2 direction; //sätt till public 
     private float changeDirectionTime = 0f;
-    public enum HealthState { Healthy, Infected, Immune }
+    public enum HealthState { Healthy, Infected, Immune, Dead }
     public HealthState state = HealthState.Healthy;
     private SpriteRenderer sr;
 
@@ -13,11 +13,21 @@ public class Maniska : MonoBehaviour
     {
         sr = GetComponent<SpriteRenderer>();
         // börjar på random ställe
-        direction = Random.insideUnitCircle.normalized;
+        direction = Random.insideUnitCircle.normalized; //ta bort ksk?
     }
 
     void Update()
     {
+        switch (state)
+        {
+            case HealthState.Healthy: sr.color = Color.green; break;
+            case HealthState.Infected: sr.color = Color.red; break;
+            case HealthState.Immune: sr.color = Color.blue; break;
+            case HealthState.Dead: sr.color = Color.black; break;
+        }
+
+        if (state == HealthState.Dead)
+            return; 
         // väljer något annat random ställe att gå idk 
         changeDirectionTime -= Time.deltaTime;
         if (changeDirectionTime <= 0f)
@@ -62,12 +72,7 @@ public class Maniska : MonoBehaviour
 
         // aplayar in eller något in den rätta positionen 
         transform.position = pos;
-        switch (state)
-        {
-            case HealthState.Healthy: sr.color = Color.green; break;
-            case HealthState.Infected: sr.color = Color.red; break;
-            case HealthState.Immune: sr.color = Color.blue; break;
-        }
+      
 
     }
 
@@ -80,28 +85,36 @@ public class Maniska : MonoBehaviour
             Debug.Log($"{name} touched {other.name}");
 
             
-            if ((state == HealthState.Infected && otherHuman.state != HealthState.Immune) ||
-                (otherHuman.state == HealthState.Infected && state != HealthState.Immune))
+            if ((state == HealthState.Infected && otherHuman.state != HealthState.Immune && otherHuman.state != HealthState.Dead) ||
+                (otherHuman.state == HealthState.Infected && state != HealthState.Immune && state != HealthState.Dead))
             {
                 int roll = Random.Range(0, 100);
 
-                if (roll < 40)
+                if (roll < 30)
                 {
+                    // Infekterad
                     state = HealthState.Infected;
                     otherHuman.state = HealthState.Infected;
                     Debug.Log($"Infection! Roll = {roll}");
                 }
-                else if (roll <99)
+                else if (roll < 60)
                 {
-                    
+                    // Klarade sig denna gång
                     Debug.Log($"Safe this time. Roll = {roll}");
                 }
-                else
+                else if (roll < 70)
                 {
-                    
+                    // Blev immun
                     state = HealthState.Immune;
                     otherHuman.state = HealthState.Immune;
                     Debug.Log($"Immune! Roll = {roll}");
+                }
+                else
+                {
+                    // Död
+                    state = HealthState.Dead;
+                    otherHuman.state = HealthState.Dead;
+                    Debug.Log($"Dead... Roll = {roll}");
                 }
             }
         }
