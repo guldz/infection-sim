@@ -1,29 +1,33 @@
 using UnityEngine;
 
-public class mäniskaspawn : MonoBehaviour
+public class MänniskaSpawn : MonoBehaviour
 {
-    public GameObject Square;
-    public GameObject sick;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public GameObject humanPrefab;  // en och samma prefab
+    public int healthyCount = 10;
+    public Vector2 spawnArea = new Vector2(8f, 4f);
+
     void Start()
     {
-        for (int i = 0; i < 10; i++) 
+        // Spawna alla friska
+        for (int i = 0; i < healthyCount; i++)
         {
-            Instantiate(Square, new Vector3(i * 0.0f, 0, 0), Quaternion.identity);
-
+            Spawn(Maniska.HealthState.Healthy);
         }
 
-        
-        
-            Instantiate(sick, new Vector3(  0.0f, 0, 0), Quaternion.identity);
-        
-     
-        
+        // Spawna EN infekterad
+        Spawn(Maniska.HealthState.Infected);
     }
 
-    // Update is called once per frame
-    void Update()
+    void Spawn(Maniska.HealthState startState)
     {
-        
+        Vector2 pos = new Vector2(
+            Random.Range(-spawnArea.x, spawnArea.x),
+            Random.Range(-spawnArea.y, spawnArea.y)
+        );
+
+        GameObject obj = Instantiate(humanPrefab, pos, Quaternion.identity);
+        Maniska m = obj.GetComponent<Maniska>();
+        m.state = startState;
+        m.direction = Random.insideUnitCircle.normalized;
     }
 }

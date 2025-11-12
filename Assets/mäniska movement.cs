@@ -3,17 +3,28 @@ using UnityEngine;
 public class Maniska : MonoBehaviour
 {
     public float speed = 1f;
-    private Vector2 direction; //sätt till public 
+    public Vector2 direction; //sätt till public 
     private float changeDirectionTime = 0f;
     public enum HealthState { Healthy, Infected, Immune, Dead }
     public HealthState state = HealthState.Healthy;
     private SpriteRenderer sr;
+    private float infectionTimer = 0f;
+    public float infectionDuration = 5f;
 
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
-        // börjar på random ställe
-        direction = Random.insideUnitCircle.normalized; //ta bort ksk?
+        if (transform.position == Vector3.zero)
+        {
+            transform.position = new Vector2(
+                Random.Range(-8f, 8f),
+                Random.Range(-4f, 4f)
+            );
+        }
+
+        // börjar gå i en slumpad riktning
+        if (direction == Vector2.zero)
+            direction = Random.insideUnitCircle.normalized;
     }
 
     void Update()
@@ -27,7 +38,7 @@ public class Maniska : MonoBehaviour
         }
 
         if (state == HealthState.Dead)
-            return; 
+            return;
         // väljer något annat random ställe att gå idk 
         changeDirectionTime -= Time.deltaTime;
         if (changeDirectionTime <= 0f)
@@ -72,7 +83,30 @@ public class Maniska : MonoBehaviour
 
         // aplayar in eller något in den rätta positionen 
         transform.position = pos;
-      
+
+        if (state == HealthState.Infected)
+        {
+            infectionTimer += Time.deltaTime;
+
+            if (infectionTimer >= infectionDuration)
+            {
+                int roll = Random.Range(0, 100);
+
+                if (roll < 50)
+                {
+                    // 50% chans att dö
+                    state = HealthState.Dead;
+                    Debug.Log($"{name} dog av infektionen. Roll = {roll}");
+                }
+                else
+                {
+                    // Överlevde, men förblir infekterad
+                    Debug.Log($"{name} överlevde infektionen (för nu). Roll = {roll}");
+                }
+
+                infectionTimer = 0f; // nollställ så att nästa döds-check sker igen om de överlever
+            }
+        }
 
     }
 
@@ -80,42 +114,60 @@ public class Maniska : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         Maniska otherHuman = other.GetComponent<Maniska>();
-        if (otherHuman != null)
+        if (otherHuman == null) return;
+
+        Debug.Log($"{name} touched {other.name}");
+
+        // Om den här personen är infekterad och den andra är mottaglig (inte immun eller död)
+        if (state == HealthState.Infected &&
+            otherHuman.state == HealthState.Healthy)
         {
-            Debug.Log($"{name} touched {other.name}");
+            int roll = Random.Range(0, 100);
 
-            
-            if ((state == HealthState.Infected && otherHuman.state != HealthState.Immune && otherHuman.state != HealthState.Dead) ||
-                (otherHuman.state == HealthState.Infected && state != HealthState.Immune && state != HealthState.Dead))
+            if (roll < 40)
             {
-                int roll = Random.Range(0, 100);
+                otherHuman.state = HealthState.Infected;
+                Debug.Log($"Infected {otherHuman.name}! Roll = {roll}");
+            }
+            else if (roll < 90)
+            {
+                Debug.Log($"{otherHuman.name} klarade sig. Roll = {roll}");
+            }
+            else if (roll < 97)
+            {
+                otherHuman.state = HealthState.Immune;
+                Debug.Log($"{otherHuman.name} blev immun! Roll = {roll}");
+            }
+            else
+            {
+                otherHuman.state = HealthState.Dead;
+                Debug.Log($"{otherHuman.name} dog! Roll = {roll}");
+            }
+        }
+        // Samma åt andra hållet (ifall other är infekterad)
+        else if (otherHuman.state == HealthState.Infected &&
+                 state == HealthState.Healthy)
+        {
+            int roll = Random.Range(0, 100);
 
-                if (roll < 30)
-                {
-                    // Infekterad
-                    state = HealthState.Infected;
-                    otherHuman.state = HealthState.Infected;
-                    Debug.Log($"Infection! Roll = {roll}");
-                }
-                else if (roll < 60)
-                {
-                    // Klarade sig denna gång
-                    Debug.Log($"Safe this time. Roll = {roll}");
-                }
-                else if (roll < 70)
-                {
-                    // Blev immun
-                    state = HealthState.Immune;
-                    otherHuman.state = HealthState.Immune;
-                    Debug.Log($"Immune! Roll = {roll}");
-                }
-                else
-                {
-                    // Död
-                    state = HealthState.Dead;
-                    otherHuman.state = HealthState.Dead;
-                    Debug.Log($"Dead... Roll = {roll}");
-                }
+            if (roll < 40)
+            {
+                state = HealthState.Infected;
+                Debug.Log($"{name} blev infekterad! Roll = {roll}");
+            }
+            else if (roll < 90)
+            {
+                Debug.Log($"{name} klarade sig. Roll = {roll}");
+            }
+            else if (roll < 97)
+            {
+                state = HealthState.Immune;
+                Debug.Log($"{name} blev immun! Roll = {roll}");
+            }
+            else
+            {
+                state = HealthState.Dead;
+                Debug.Log($"{name} dog! Roll = {roll}");
             }
         }
     }
