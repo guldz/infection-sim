@@ -100,11 +100,11 @@ public class Maniska : MonoBehaviour
                 }
                 else
                 {
-                    // Överlevde, men förblir infekterad
+                    
                     Debug.Log($"{name} överlevde infektionen (för nu). Roll = {roll}");
                 }
 
-                infectionTimer = 0f; // nollställ så att nästa döds-check sker igen om de överlever
+                infectionTimer = 0f; 
             }
         }
 
@@ -118,7 +118,7 @@ public class Maniska : MonoBehaviour
 
         Debug.Log($"{name} touched {other.name}");
 
-        // Om den här personen är infekterad och den andra är mottaglig (inte immun eller död)
+        // om den här personen är infekterad och den andra är mottaglig (inte immun eller död)
         if (state == HealthState.Infected &&
             otherHuman.state == HealthState.Healthy)
         {
@@ -144,7 +144,7 @@ public class Maniska : MonoBehaviour
                 Debug.Log($"{otherHuman.name} dog! Roll = {roll}");
             }
         }
-        // Samma åt andra hållet (ifall other är infekterad)
+        // samma åt andra hållet (ifall other är infekterad)
         else if (otherHuman.state == HealthState.Infected &&
                  state == HealthState.Healthy)
         {

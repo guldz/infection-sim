@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MänniskaSpawn : MonoBehaviour
 {
-    public GameObject humanPrefab;  // en och samma prefab
+    public GameObject humanPrefab;  // square asså 
     public int healthyCount = 10;
     public Vector2 spawnArea = new Vector2(8f, 4f);
 
@@ -14,7 +14,7 @@ public class MänniskaSpawn : MonoBehaviour
             Spawn(Maniska.HealthState.Healthy);
         }
 
-        // Spawna EN infekterad
+        // Spawna 1 infekterad
         Spawn(Maniska.HealthState.Infected);
     }
 
