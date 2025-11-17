@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7325610714548244238}
   - component: {fileID: 6260642073302747222}
   - component: {fileID: 3922731007729903406}
+  - component: {fileID: 4771374598942830778}
   m_Layer: 0
   m_Name: Square
   m_TagString: "m\xE4niska"
@@ -30,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 4501260626738517090}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 0, z: 0}
+  m_LocalPosition: {x: 0.681, y: -0.04, z: 0}
   m_LocalScale: {x: 0.47901854, y: 0.5016977, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -81,7 +82,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.19436097, g: 1, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -104,6 +105,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  direction: {x: 0, y: 0}
+  state: 0
+  infectionDuration: 5
 --- !u!50 &7325610714548244238
 Rigidbody2D:
   serializedVersion: 5
@@ -213,3 +217,24 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: -0.009676502}
   m_Radius: 1.1202825
+--- !u!114 &4771374598942830778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4501260626738517090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27e3be1d0c19bf240b1ff4dccadaac39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stateSprites:
+  - {fileID: 7125869410913625168, guid: 788af3147bbbd2941a16d42c1491865b, type: 3}
+  - {fileID: 3921928914460713327, guid: a2d3d0bad97aa764cacfb7637c9fe2d5, type: 3}
+  - {fileID: 5955636801825222886, guid: 7d407f3bbed4775469e45f7529a804d5, type: 3}
+  - {fileID: 5508272774885691128, guid: a3fa6da4d64984b4184495d0896281c0, type: 3}
+  HealthySprite: {fileID: 0}
+  SickSprite: {fileID: 0}
+  ImmuneSprite: {fileID: 0}
+  DeadSprite: {fileID: 0}

@@ -104,7 +104,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  direction: {x: 0, y: 0}
   state: 1
+  infectionDuration: 5
 --- !u!50 &1482591825653123038
 Rigidbody2D:
   serializedVersion: 5

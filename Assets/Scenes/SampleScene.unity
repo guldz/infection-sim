@@ -662,7 +662,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   humanPrefab: {fileID: 4501260626738517090, guid: 545109abd7f7d7d43a7ffed87fd5b282, type: 3}
-  healthyCount: 20
+  healthyCount: 10
   spawnArea: {x: 8, y: 4}
 --- !u!4 &712864282
 Transform:

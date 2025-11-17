@@ -29,13 +29,13 @@ public class Maniska : MonoBehaviour
 
     void Update()
     {
-        switch (state)
-        {
-            case HealthState.Healthy: sr.color = Color.green; break;
-            case HealthState.Infected: sr.color = Color.red; break;
-            case HealthState.Immune: sr.color = Color.blue; break;
-            case HealthState.Dead: sr.color = Color.black; break;
-        }
+        //switch (state)
+       // {
+            //case HealthState.Healthy: sr.color = Color.green; break;
+            //case HealthState.Infected: sr.color = Color.red; break;
+            //case HealthState.Immune: sr.color = Color.blue; break;
+            //case HealthState.Dead: sr.color = Color.grey; break;
+       // }
 
         if (state == HealthState.Dead)
             return;
